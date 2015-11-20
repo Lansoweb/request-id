@@ -45,13 +45,21 @@ final class RequestId
      */
     public function __invoke(RequestInterface $request, ResponseInterface $response, callable $next)
     {
+        $uuid = '';
+
         if ($this->options['allow_override'] || !$request->hasHeader($this->options['header_name'])) {
             $uuid = $this->generateId();
             $request = $request->withHeader($this->options['header_name'], (string) $uuid);
+        } elseif ($request->hasHeader($this->options['header_name'])) {
+            $uuid = $request->getHeader($this->options['header_name'])[0];
         }
 
         $response = $next($request, $response);
-        return $response->withHeader($this->options['header_name'], (string) $uuid);
+        if (!empty($uuid)) {
+            $response = $response->withHeader($this->options['header_name'], (string) $uuid);
+        }
+
+        return $response;
     }
 
     /**
