@@ -50,7 +50,8 @@ final class RequestId
             $request = $request->withHeader($this->options['header_name'], (string) $uuid);
         }
 
-        return $next($request, $response);
+        $response = $next($request, $response);
+        return $response->withHeader($this->options['header_name'], (string) $uuid);
     }
 
     /**

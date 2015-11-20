@@ -1,6 +1,6 @@
 # Request ID Middleware for PHP
 
-This middleware adds a Request ID header tht can be used to trace back requests (logs).
+This middleware adds a Request ID header that can be used to trace back requests (logs).
 
 It uses [Ramsey\Uuid\(https://github.com/ramsey/uuid) library to uuid generation.
 
@@ -13,7 +13,7 @@ For example:
 $app->pipe(new \LosMiddleware\RequestId\RequestId($options);
 ```
 
-And the middleware will add a header
+And the middleware will add a header to the request AND response
 ```
 X-Request-Id: 56CEE969-4D3B-404E-9938-03E769E191CB
 ```
