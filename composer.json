@@ -1,0 +1,35 @@
+{
+  "name" : "los/request-id",
+  "description" : "PHP middleware to add a Request ID header",
+  "require" : {
+    "php" : "^5.5|^7.0",
+    "psr/http-message" : "~1.0",
+    "ramsey/uuid" : "3.0"
+  },
+  "require-dev" : {
+    "phpunit/phpunit" : "^5.0",
+    "squizlabs/php_codesniffer" : "^2.3",
+    "container-interop/container-interop" : "~1.1",
+    "satooshi/php-coveralls" : "~0.6"
+  },
+  "license" : "MIT",
+  "autoload-dev" : {
+    "psr-4" : {
+      "LosMiddleware\\RequestIdTest\\" : "test/"
+    }
+  },
+  "autoload" : {
+    "psr-4" : {
+      "LosMiddleware\\RequestId\\" : "src/"
+    }
+  },
+  "type" : "library",
+  "scripts" : {
+    "test" : [ "php vendor/squizlabs/php_codesniffer/scripts/phpcs", "php vendor/phpunit/phpunit/phpunit" ]
+  },
+  "homepage" : "https://github.com/lansoweb/request-id",
+  "authors" : [ {
+    "name" : "Leandro Silva",
+    "homepage" : "http://leandrosilva.info/"
+  } ]
+}
