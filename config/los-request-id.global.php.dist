@@ -3,6 +3,7 @@
 return [
 
     'los_request_id' => [
+        'uuid' => false,
         'uuid_version' => 4,
         'uuid_ns' => null,
         'uuid_name' => null,
@@ -17,8 +18,11 @@ return [
     ],
 
     'middleware_pipeline' => [
-        'pre_routing' => [
-            [ 'middleware' => LosMiddleware\RequestId\RequestId::class ],
+        'pre' => [
+            'middleware' => [
+                [ 'middleware' => LosMiddleware\RequestId\RequestId::class ],
+            ],
+            'priority' => 10001,
         ],
     ],
 

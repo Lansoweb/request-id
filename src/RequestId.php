@@ -18,6 +18,7 @@ final class RequestId
     public function __construct($options = [])
     {
         $this->options = array_merge([
+            'uuid' => false,
             'uuid_version' => 4,
             'uuid_ns' => null,
             'uuid_name' => null,
@@ -67,6 +68,10 @@ final class RequestId
      */
     private function generateId()
     {
+        if ($this->options['uuid'] !== false && Uuid::isValid($this->options['uuid'])) {
+            return $this->options['uuid'];
+        }
+
         $version = $this->options['uuid_version'];
         $args = [
             $this->options['uuid_ns'],
