@@ -2,7 +2,7 @@
 
 namespace LosMiddleware\RequestId;
 
-use Interop\Container\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 class RequestIdFactory
 {
@@ -11,14 +11,12 @@ class RequestIdFactory
      *
      * @param ContainerInterface $container
      * @return \LosMiddleware\RequestId\RequestId
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
      */
     public function __invoke(ContainerInterface $container)
     {
         $config = $container->get('config');
-        $options = array_key_exists('los_request_id', $config) && !empty($config['los_request_id'])
-            ? $config['los_request_id']
-            : [];
-
-        return new RequestId($options);
+        return new RequestId($config['los_request_id'] ?? []);
     }
 }
