@@ -1,22 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace LosMiddleware\RequestId;
 
 use Psr\Container\ContainerInterface;
 
+use function assert;
+use function is_array;
+
 class RequestIdFactory
 {
-    /**
-     * Creates the middleware
-     *
-     * @param ContainerInterface $container
-     * @return \LosMiddleware\RequestId\RequestId
-     * @throws \Psr\Container\ContainerExceptionInterface
-     * @throws \Psr\Container\NotFoundExceptionInterface
-     */
-    public function __invoke(ContainerInterface $container)
+    public function __invoke(ContainerInterface $container): RequestId
     {
         $config = $container->get('config');
-        return new RequestId($config['los_request_id'] ?? []);
+        assert(is_array($config));
+
+        $requestConfig = $config['los_request_id'] ?? [];
+        assert(is_array($requestConfig));
+
+        return new RequestId($requestConfig);
     }
 }
