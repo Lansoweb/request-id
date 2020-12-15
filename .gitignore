@@ -1,9 +1,6 @@
-._*
-.~lock.*
-.buildpath
-.project
-.settings
-vendor
+/vendor/
 /composer.lock
+/phpcs.xml
+/phpunit.xml
 /build
-/.php_cs.cache
+/.phpunit.result.cache
