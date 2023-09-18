@@ -20,11 +20,11 @@ jobs:
           - "lowest"
           - "highest"
         php-version:
-          - "7.4"
+          - "8.1"
         operating-system:
           - "ubuntu-latest"
         include:
-          - php: "8.0"
+          - php: "8.2"
             dependencies: "highest"
             composer-options: "--ignore-platform-reqs"
 
