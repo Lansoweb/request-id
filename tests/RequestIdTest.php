@@ -158,7 +158,7 @@ class RequestIdTest extends TestCase
 
         self::assertEquals(1, preg_match(
             '/\A[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-6{1}[0-9A-Fa-f]{3}-[ABab89]{1}[0-9A-Fa-f]{3}-[0-9A-Fa-f]{12}\z/Dms',
-            $response->getHeader(RequestId::HEADER_NAME)[0]
+            $response->getHeader(RequestId::HEADER_NAME)[0],
         ));
     }
 }
