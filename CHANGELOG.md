@@ -2,27 +2,22 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
-## 3.0.3 - TBD
+## 3.0.3 - 2023-09-19
 
-### Added
 
-- Nothing.
+-----
 
-### Changed
+### Release Notes for [3.0.3](https://github.com/Lansoweb/request-id/milestone/7)
 
-- Nothing.
+3.0.x bugfix release (patch)
 
-### Deprecated
+### 3.0.3
 
-- Nothing.
+- Total issues resolved: **0**
+- Total pull requests resolved: **1**
+- Total contributors: **1**
 
-### Removed
-
-- Nothing.
-
-### Fixed
-
-- Nothing.
+ - [7: update deps](https://github.com/Lansoweb/request-id/pull/7) thanks to @Lansoweb
 
 ## 2.2.0 - TBD
 
