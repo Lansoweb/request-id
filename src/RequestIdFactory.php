@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace LosMiddleware\RequestId;
+namespace Los\RequestId;
 
 use Psr\Container\ContainerInterface;
 
@@ -16,9 +16,23 @@ class RequestIdFactory
         $config = $container->get('config');
         assert(is_array($config));
 
-        $requestConfig = $config['los_request_id'] ?? [];
+        /** @param array{
+         *     allow_override?: bool,
+         *     header_name?: string
+         * } $options
+         */
+        $requestConfig = $config['los']['request_id'] ?? [];
         assert(is_array($requestConfig));
 
-        return new RequestId($requestConfig);
+        $generator = $container->get(RequestIdGenerator::class);
+        assert($generator instanceof RequestIdGenerator);
+
+        return new RequestId(
+            new Options(
+                $requestConfig['header_name'] ?? '',
+                (bool) ($requestConfig['allow_override'] ?? false),
+            ),
+            $generator,
+        );
     }
 }
