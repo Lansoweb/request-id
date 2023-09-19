@@ -1,21 +1,21 @@
 {
     "name": "los/request-id",
     "description": "PHP middleware to add a Request ID header",
+    "license": "MIT",
     "type": "library",
-    "homepage": "https://github.com/lansoweb/request-id",
     "authors": [
         {
             "name": "Leandro Silva",
             "email": "lansoweb@hotmail.com"
         }
     ],
-    "license": "MIT",
+    "homepage": "https://github.com/lansoweb/request-id",
     "require": {
         "php": "^8.1",
-        "psr/http-message": "^2.0",
-        "psr/http-server-middleware": "^1.0",
-        "ramsey/uuid": "^4.1",
-        "psr/container": "^1.0 || ^2.0"
+        "psr/container": "^1.0 || ^2.0",
+        "psr/http-message": "^1.0 || ^2.0",
+        "psr/http-server-middleware": "^1.0 || ^2.0",
+        "ramsey/uuid": "^4.1"
     },
     "require-dev": {
         "doctrine/coding-standard": "^12.0",
@@ -35,6 +35,12 @@
             "Los\\RequestIdTest\\": "tests/"
         }
     },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        },
+        "sort-packages": true
+    },
     "scripts": {
         "check": [
             "@cs-check",
@@ -42,17 +48,11 @@
             "@psalm",
             "@test"
         ],
-        "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
         "phpstan": "phpstan analyse -l 4 src",
-        "psalm": "psalm --show-info=true"
-    },
-    "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
-        }
+        "psalm": "psalm --show-info=true",
+        "test": "phpunit --colors=always",
+        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
     }
 }
