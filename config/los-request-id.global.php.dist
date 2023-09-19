@@ -1,29 +1,18 @@
 <?php
 
 return [
-
-    'los_request_id' => [
-        'uuid' => false,
-        'uuid_version' => 4,
-        'uuid_ns' => null,
-        'uuid_name' => null,
-        'allow_override' => false,
-        'header_name' => LosMiddleware\RequestId\RequestId::HEADER_NAME,
+    'los' => [
+        'request_id' => [
+            'allow_override' => false,
+            'header_name' => Los\RequestId\RequestId::HEADER_NAME,
+        ],
     ],
-
     'dependencies' => [
         'factories' => [
-            LosMiddleware\RequestId\RequestId::class => LosMiddleware\RequestId\RequestIdFactory::class,
+            Los\RequestId\RequestId::class => Los\RequestId\RequestIdFactory::class,
         ],
+        'invokables' => [
+            Los\RequestId\RequestIdGenerator::class => Los\RequestId\Generator\Uuid4Generator::class,
+        ]
     ],
-
-    'middleware_pipeline' => [
-        'pre' => [
-            'middleware' => [
-                [ 'middleware' => LosMiddleware\RequestId\RequestId::class ],
-            ],
-            'priority' => 10001,
-        ],
-    ],
-
 ];

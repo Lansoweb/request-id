@@ -20,13 +20,9 @@ jobs:
           - "lowest"
           - "highest"
         php-version:
-          - "7.4"
+          - "8.2"
         operating-system:
           - "ubuntu-latest"
-        include:
-          - php: "8.0"
-            dependencies: "highest"
-            composer-options: "--ignore-platform-reqs"
 
     steps:
       - name: "Checkout"
