@@ -1,27 +1,61 @@
 # Request ID Middleware for PHP
 
-This middleware adds a Request ID header that can be used to trace back requests (logs).
+los/request-id is a PHP 8.2+ PSR-15 middleware for request and log
+correlation. It adds one final request ID to the request header, a request
+attribute, and the response header.
 
-It uses [Ramsey\Uuid\(https://github.com/ramsey/uuid) library as default uuid generation.
+## Install
+
+    composer require los/request-id
 
 ## Usage
 
-Just add the middleware as one of the first in your application.
+    use Los\RequestId\RequestId;
 
-For example:
-```php
-$app->pipe(new \LosMiddleware\RequestId\RequestId($options);
-```
+    $app->pipe(new RequestId());
 
-And the middleware will add a header to the request AND response
-```
-X-Request-Id: 56CEE969-4D3B-404E-9938-03E769E191CB
-```
+For Laminas applications, copy config/los-request-id.global.php.dist to the
+application config directory and add RequestId::class to the pipeline.
 
-The options are:
-* allow_override: If it's allowed to override a previouly added request id header. Default: false
-* header_name: Header name. Default: X-Request-Id 
+## Behavior
 
-### Laminas
+The middleware generates a UUID v4 unless it accepts an inbound correlation
+value. The final value is available in the X-Request-Id header and the
+request_id request attribute.
 
-If you are using [laminas-skeleton](https://github.com/laminas/laminas-skeleton), you can copy `config/los-request-id.global.php.dist` to `config/autoload/los-request-id.global.php` and modify configuration as your needs.
+Inbound IDs are accepted only when they are at most 128 characters and match
+[A-Za-z0-9][A-Za-z0-9._:-]*. Invalid values are replaced.
+
+## Options
+
+| Option | Default | Meaning |
+| --- | --- | --- |
+| header_name | X-Request-Id | Request and response header name. |
+| attribute_name | request_id | Server-request attribute containing the final ID. |
+| inbound_id_policy | accept | accept keeps valid inbound IDs; replace always generates a UUID v4. |
+| max_id_length | 128 | Maximum accepted inbound ID length, from 1 to 128. |
+| use_traceparent | false | Use a valid W3C traceparent version 00 trace ID when no valid request ID exists. |
+
+When use_traceparent is enabled, a valid X-Request-Id still takes precedence.
+This package only reads the trace ID for correlation; it does not operate a
+distributed tracer.
+
+## Migrating from v3
+
+Replace allow_override with:
+
+    'inbound_id_policy' => 'replace',
+
+Version 4 removes configurable UUID versions. It generates UUID v4 values
+when it does not accept an inbound correlation value.
+
+## Releases
+
+Merge a release-ready commit into the default branch, then create and push an
+annotated version tag:
+
+    git tag -a 4.0.0 -m "4.0.0"
+    git push origin 4.0.0
+
+The release workflow verifies that the tag is reachable from the default branch
+and creates a GitHub Release with generated notes.

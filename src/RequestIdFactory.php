@@ -4,35 +4,39 @@ declare(strict_types=1);
 
 namespace Los\RequestId;
 
+use InvalidArgumentException;
 use Psr\Container\ContainerInterface;
 
-use function assert;
 use function is_array;
 
-class RequestIdFactory
+final class RequestIdFactory
 {
     public function __invoke(ContainerInterface $container): RequestId
     {
         $config = $container->get('config');
-        assert(is_array($config));
 
-        /** @param array{
-         *     allow_override?: bool,
-         *     header_name?: string
-         * } $options
-         */
-        $requestConfig = $config['los']['request_id'] ?? [];
-        assert(is_array($requestConfig));
+        if (! is_array($config)) {
+            throw new InvalidArgumentException('Application config must be an array');
+        }
+
+        $losConfig = $config['los'] ?? [];
+
+        if (! is_array($losConfig)) {
+            throw new InvalidArgumentException('los config must be an array');
+        }
+
+        $requestIdConfig = $losConfig['request_id'] ?? [];
+
+        if (! is_array($requestIdConfig)) {
+            throw new InvalidArgumentException('los.request_id config must be an array');
+        }
 
         $generator = $container->get(RequestIdGenerator::class);
-        assert($generator instanceof RequestIdGenerator);
 
-        return new RequestId(
-            new Options(
-                $requestConfig['header_name'] ?? '',
-                (bool) ($requestConfig['allow_override'] ?? false),
-            ),
-            $generator,
-        );
+        if (! $generator instanceof RequestIdGenerator) {
+            throw new InvalidArgumentException(RequestIdGenerator::class . ' must implement RequestIdGenerator');
+        }
+
+        return new RequestId(Options::fromArray($requestIdConfig), $generator);
     }
 }

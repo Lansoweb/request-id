@@ -1,48 +1,31 @@
-# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
-
-name: "PHPUnit tests"
+name: PHPUnit tests
 
 on:
   pull_request:
   push:
     branches:
-      - "master"
+      - main
+      - master
+
+permissions:
+  contents: read
 
 jobs:
   phpunit:
-    name: "PHPUnit tests"
-
-    runs-on: ${{ matrix.operating-system }}
-
+    name: PHPUnit (PHP ${{ matrix.php-version }}, ${{ matrix.dependencies }})
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        dependencies:
-          - "lowest"
-          - "highest"
-        php-version:
-          - "8.2"
-        operating-system:
-          - "ubuntu-latest"
-
+        php-version: ["8.2", "8.5"]
+        dependencies: [lowest, highest]
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v2"
-
-      - name: "Install PHP"
-        uses: "shivammathur/setup-php@v2"
+      - uses: actions/checkout@v6
+      - uses: shivammathur/setup-php@v2
         with:
-          coverage: "pcov"
-          php-version: "${{ matrix.php-version }}"
+          php-version: ${{ matrix.php-version }}
           ini-values: memory_limit=-1
           tools: composer:v2
-
-      - uses: "ramsey/composer-install@v1"
+      - uses: ramsey/composer-install@v4
         with:
-          dependency-versions: "${{ matrix.dependencies }}"
-          composer-options: "${{ matrix.composer-options }}"
-
-      - name: "Tests"
-        run: "vendor/bin/phpunit --coverage-clover build/logs/clover.xml --coverage-text"
-
-      - name: "Publish coverage report to Codecov"
-        uses: "codecov/codecov-action@v1"
+          dependency-versions: ${{ matrix.dependencies }}
+      - run: composer test

@@ -1,18 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
+use Los\RequestId\Generator\Uuid4Generator;
+use Los\RequestId\RequestId;
+use Los\RequestId\RequestIdFactory;
+use Los\RequestId\RequestIdGenerator;
+
 return [
     'los' => [
         'request_id' => [
-            'allow_override' => false,
-            'header_name' => Los\RequestId\RequestId::HEADER_NAME,
+            'attribute_name' => RequestId::ATTRIBUTE_NAME,
+            'header_name' => RequestId::HEADER_NAME,
+            'inbound_id_policy' => 'accept',
+            'max_id_length' => 128,
+            'use_traceparent' => false,
         ],
     ],
     'dependencies' => [
         'factories' => [
-            Los\RequestId\RequestId::class => Los\RequestId\RequestIdFactory::class,
+            RequestId::class => RequestIdFactory::class,
         ],
         'invokables' => [
-            Los\RequestId\RequestIdGenerator::class => Los\RequestId\Generator\Uuid4Generator::class,
-        ]
+            RequestIdGenerator::class => Uuid4Generator::class,
+        ],
     ],
 ];

@@ -1,6 +1,25 @@
 # Changelog
 
-All notable changes to this project will be documented in this file, in reverse chronological order by release.
+All notable changes to this project will be documented in this file, in reverse
+chronological order by release.
+
+## 4.0.0 - TBD
+
+### Added
+
+- Request attributes for the final correlation ID.
+- Validated inbound ID handling and explicit accept or replace policies.
+- Optional W3C traceparent version 00 trace-ID correlation.
+
+### Changed
+
+- Bump the minimum PHP version to 8.2.
+- Generate UUID v4 values when an inbound ID is not accepted.
+
+### Removed
+
+- The allow_override and configurable UUID-version options.
+- The legacy milestone-driven release workflow.
 
 ## 3.0.4 - TBD
 
@@ -26,20 +45,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ## 3.0.3 - 2023-09-19
 
-
------
-
-### Release Notes for [3.0.3](https://github.com/Lansoweb/request-id/milestone/7)
-
-3.0.x bugfix release (patch)
-
-### 3.0.3
-
-- Total issues resolved: **0**
-- Total pull requests resolved: **1**
-- Total contributors: **1**
-
- - [7: update deps](https://github.com/Lansoweb/request-id/pull/7) thanks to @Lansoweb
+3.0.x bugfix release.
 
 ## 2.2.0 - TBD
 
@@ -67,30 +73,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- Github Actions for phpcs, phpstan and release on milestone closed
-
-- Add support for UUID v6
-
-- Add support for PHP 8.0
+- GitHub Actions for phpcs, phpstan and release on milestone closed.
+- Add support for UUID v6.
+- Add support for PHP 8.0.
 
 ### Changed
 
-- Bump minimum supported PHP version to 7.4
-
-
-
------
-
-### Release Notes for [2.1.0](https://github.com/Lansoweb/request-id/milestone/1)
-
-
-
-### 2.1.0
-
-- Total issues resolved: **0**
-- Total pull requests resolved: **2**
-- Total contributors: **1**
-
- - [2: Master](https://github.com/Lansoweb/request-id/pull/2) thanks to @Lansoweb
- - [1: php 8.0, autorelease](https://github.com/Lansoweb/request-id/pull/1) thanks to @Lansoweb
-
+- Bump minimum supported PHP version to 7.4.
